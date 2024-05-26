@@ -1,12 +1,14 @@
 package com.pramu.SpringBootApp.Service;
 
 import com.pramu.SpringBootApp.Entity.Department;
+import com.pramu.SpringBootApp.Error.DepartmentNotFoundException;
 import com.pramu.SpringBootApp.Repository.DeptRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class DeptServiceImpl implements DeptService{
@@ -15,8 +17,14 @@ public class DeptServiceImpl implements DeptService{
     private DeptRepository deptRepository;
 
     @Override
-    public Department getDeptById(Long deptId) {
-        return deptRepository.findById(deptId).get();
+    public Department getDeptById(Long deptId) throws DepartmentNotFoundException {
+        Optional<Department> dept = deptRepository.findById(deptId);
+
+        if(!dept.isPresent()){
+            throw new DepartmentNotFoundException("Department not found.. Sorry!");
+        }
+
+        return dept.get();
     }
 
     @Override
