@@ -1,0 +1,60 @@
+server:
+  port: 8091
+
+spring:
+  profiles:
+    active: "prod"
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: preprod
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    url: jdbc:mysql://localhost:3306/testdb
+    password: '1234'
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: 'true'
+check:
+  message: '"Application checked"'
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    url: jdbc:mysql://localhost:3306/testdbprod
+    password: '1234'
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: 'true'
+check:
+  message: '"Application checked"'
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: qa
+    datasource:
+      driver-class-name: com.mysql.jdbc.Driver
+      username: root
+      url: jdbc:mysql://localhost:3306/testdbqa
+      password: '1234'
+    jpa:
+      hibernate:
+        ddl-auto: update
+      show-sql: 'true'
+  check:
+    message: '"Application checked"'
